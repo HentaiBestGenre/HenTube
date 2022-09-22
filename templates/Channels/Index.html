@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block meta %}
+    <title>Channel Page</title>
+    <link href="{% static 'Channels/css/index.css' %}" rel="stylesheet" type="text/css">
+{% endblock meta %}
+
+{% block body %}
+<div style="display: flex">
+    <div class="channel_name">
+        <h3 class="h3">{{ channel.user.username}}</h3>
+        <p class="smoll_text"><span id="num_subscribers">{{ channel.subscribers }}</span> subscribers</p>
+    </div>
+    <div>
+        {% if channel.user_id != request.user.id %}
+            {% if isSubscribed %}
+                <button onclick="Subscribe('true')" class="subscribe_button true">Subscribe</button>
+                <button onclick="Subscribe('false')" class="subscribe_button false" hidden>Subscribe</button>
+            {% else %}
+                <button onclick="Subscribe('true')" class="subscribe_button true" hidden>Subscribe</button>
+                <button onclick="Subscribe('false')" class="subscribe_button false">Subscribe</button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+<div class="videos-container">
+    {% for video in videos %}
+        <div class="video-container">
+            <a href="{% url 'Videos:video' video_id=video.id %}">
+                <div class="video">
+                    <div class="preview-container">
+                        <div class="preview">
+                            <img src="../..{% get_media_prefix %}{{ video.preview_path }}" alt="none">
+                        </div>
+                        <div class="duration">12:13</div>
+                    </div>
+                    <div class="title">{{ video.title }}</div>
+                    <div class="chanel">
+                        <a href="{% url 'Channels:Channel' channel_id=video.publisher_id %}">{{ video.publisher.username }}</a>
+                    </div>
+                    <div class="views">{{ video.views }} views • {{ video.pub_date|naturaltime }}</div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock body %}
+
+{% block scripts %}
+<script type="application/javascript">
+    function Subscribe (isSubscribed){
+        $.ajax({
+            url: "{% url "Channels:Subscribe" %}",
+            data: {
+                "subscriber": {{ request.user.id }},
+                "subscription": {{ channel.user.id }},
+                "value": isSubscribed,
+                "csrfmiddlewaretoken": "{{ csrf_token }}"
+            },
+            type: "POST",
+            success: function (response){
+                if (response.status === 200){
+                    $("." + isSubscribed).attr("hidden", "hidden")
+                    $("." + response['value']).removeAttr("hidden")
+                    switch (response["value"]){
+                        case "true":{
+                            let nunber = $("#num_subscribers")
+                            let v = nunber.text()
+                            nunber.text(parseInt(v)+1)
+                            break;
+                        }
+                        case "false":{
+                            let nunber = $("#num_subscribers")
+                            let v = nunber.text()
+                            nunber.text(parseInt(v)-1)
+                            break;
+                        }
+                    }
+                }
+            }
+        })
+    }
+</script>
+{% endblock scripts %}

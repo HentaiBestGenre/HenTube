@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Channel Page</title>
+    <link href="{% static 'Channels/css/index.css' %}" rel="stylesheet" type="text/css">
+{% endblock meta %}
+
+{% block body %}
+<div class="videos-container">
+    {% for video in videos %}
+        <div class="video-container">
+            <a href="{% url 'Videos:video' video_id=video.id %}">
+                <div class="video">
+                    <div class="preview-container">
+                        <div class="preview">
+                            <img src="../..{% get_media_prefix %}{{ video.preview_path }}" alt="none">
+                        </div>
+                        <div class="duration">12:13</div>
+                    </div>
+                    <div class="title">{{ video.title }}</div>
+                    <div class="chanel">
+                        <a href="{% url 'Channels:Channel' channel_id=video.publisher_id %}">{{ video.publisher.username }}</a>
+                    </div>
+{#                    <div class="views">{{ video.views }} views • {{ video.pub_data|naturaltime }}</div>#}
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock body %}

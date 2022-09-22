@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Registration</title>
+{% endblock meta %}
+
+{% block body %}
+    <h1>Registration</h1>
+    <form method="post" action={% url 'Users:registration' %}>
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Register</button>
+    </form>
+{% endblock body %}
