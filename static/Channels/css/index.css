@@ -1,0 +1,82 @@
+th, td{
+    border: solid black;
+    padding: 0 5px;
+}
+
+a{
+    text-decoration: none;
+}
+
+.videos-container{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+
+.video-container{
+    padding: 10px;
+    /*background-color: rgba(181,181,181,0.47);*/
+}
+
+.preview img{
+    width: 100%;
+    object-fit: cover;
+}
+
+.title{
+    position: relative;
+    left: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 0.9;
+    padding: 5px 0;
+}
+
+.views,
+.chanel,
+.pub-data{
+    position: relative;
+    left: 20px;
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 0.9;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0 0 5px 0;
+}
+.preview{
+    position: relative;
+    /*width: 200px;*/
+    height: 220px;
+    overflow: hidden;
+}
+.preview img{
+    object-fit: cover;
+}
+.preview-container{
+    position: relative;
+}
+.duration{
+    position: absolute;
+    right: 5px;
+    bottom: 10px;
+    color: white;
+    font-size: 12px;
+    font-weight: 200;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+}
+.channel_name{
+    margin: 10px;
+}
+.smoll_text{
+    color: #606060;
+    font-family: "Roboto","Arial",sans-serif;
+    font-size: 1.2rem;
+    line-height: 2rem;
+    font-weight: 400;
+}
+.true{
+    color: red;
+}
+.false{
+    color: gray;
+}

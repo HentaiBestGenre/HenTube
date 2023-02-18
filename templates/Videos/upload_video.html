@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title></title>
+{% endblock meta %}
+
+{% block styles %}
+{% endblock styles %}
+
+{% block body %}
+<h1>Video upload page</h1>
+<div>
+    <form method="post" enctype="multipart/form-data" action={% url 'Videos:upload_video' %}>
+        {% csrf_token %}
+        {{ UploadVideoForm }}
+        <button type="submit" class="btn btn-primary">submit</button>
+    </form>
+</div>
+{% endblock body %}
